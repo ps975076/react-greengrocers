@@ -4,14 +4,15 @@ You're going to recreate the [javascript greengrocers exercise](./images/greengr
 
 ![](images/greengrocer-exercise.gif)
 
-Reusing an exercise that you already know will help you understand the fundamentals of React.
+> Reusing an exercise that you already know will help you understand the fundamentals of React.
 
 ## Setup
 
 1. Fork this repository
 2. Clone the forked repository onto your local machines
-3. In the root directory, type `npm install`, which installs dependencies for the project
-4. Finally, type `npm run start`, which starts a development server that runs your website in the browser. That server will reload your website whenever you make any changes to source files
+3. In the root directory, type `npm ci`, which installs dependencies for the project
+4. Finally, type `npm run dev`, which starts a development server that runs your website in the browser. That server 
+   will reload your website whenever you make any changes to source files
 
 ## Deliverables
 
@@ -34,8 +35,9 @@ Reusing an exercise that you already know will help you understand the fundament
 
 ## Extension 1
 
-- Add filters to the store ie. filter by item type; when a user clicks a filter they will only see items of that type
-- Add sorting to the store ie. sort by price or sort alphabetically; when a user clicks sort they will see a sorted list of items
+- Add filters to the store i.e. filter by item type; when a user clicks a filter they will only see items of that type
+- Add sorting to the store i.e. sort by price or sort alphabetically; when a user clicks sort they will see a sorted 
+  list of items
 
 ## Extension 2
 
