@@ -32,6 +32,16 @@ export default function App() {
   const [storeItems, setStoreItems] = useState(initialStoreItems);
   const [cartItems, setCartItems] = useState();
 
+  // 5. Add to cart button - function
+  const addToCartButton = (itemAdded) => {
+    // Get the store items first
+
+    // Add items to the store
+    storeItems.map((storeItems) => {
+      console.log(storeItems);
+    });
+  };
+
   return (
     <>
       <header id="store">
@@ -50,8 +60,8 @@ export default function App() {
                     alt="beetroot"
                   />
                 </div>
-                {/* 5. Add an onClick here so when the "Add to cart" button is clicked the cart items will increase in quantity */}
-                <button>Add to cart</button>
+                {/* 5. Add an onClick here so when the "Add to cart" button is clicked the cart items will increase in quantity. Create a function at the top, use the variable name here, assign to "onClick" */}
+                <button onClick={addToCartButton}>Add to cart</button>
               </li>
             );
           })}
