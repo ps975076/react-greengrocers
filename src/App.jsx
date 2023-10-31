@@ -44,9 +44,13 @@ export default function App() {
             return (
               <li key={storeItems.id}>
                 <div className="store--item-icon">
-                  <img src="/assets/icons/001-beetroot.svg" alt="beetroot" />
+                  {/* 4.Render the image */}
+                  <img
+                    src={`assets/icons/${storeItems.id}.svg`}
+                    alt="beetroot"
+                  />
                 </div>
-                {/* 4. Add an onClick here so when the "Add to cart" button is clicked the cart items will increase in quantity */}
+                {/* 5. Add an onClick here so when the "Add to cart" button is clicked the cart items will increase in quantity */}
                 <button>Add to cart</button>
               </li>
             );
@@ -58,8 +62,8 @@ export default function App() {
         <div className="cart--item-list-container">
           <ul className="item-list cart--item-list">
             {/* Write some code here... */}
-            {/* 5. Copied the template cart-items here */}
-            {/* 6. Map through all the cart-items ??*/}
+            {/* 6. Copied the template cart-items here */}
+            {/* 7. Map through all the cart-items ??*/}
             <li>
               <img
                 className="cart--item-icon"
