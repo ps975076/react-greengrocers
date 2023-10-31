@@ -27,7 +27,9 @@ import { useState } from "react";
 
 export default function App() {
   // 1. Setup state here...
+  // State for storeItems
   const [storeItems, setStoreItems] = useState(initialStoreItems);
+  // 2. State for CartItems = set State as an empty array, because we will push items into this empty array.
   const [cartItems, setCartItems] = useState([]);
 
   // 5. Add to cart button - function
@@ -54,7 +56,7 @@ export default function App() {
     setCartItems(items);
   };
 
-  //Create a minus button event
+  //Create a minus button event function
   const decreaseQty = (minusItem) => {
     const decreaseItems = [...cartItems];
     let updatedItems = [];
@@ -67,6 +69,7 @@ export default function App() {
         // always return when using map
         return item;
       });
+      //if the qty is less than 1, then go through the items using filter and check if the item.id is not the same as the minusItem.id, if the condition is met, the array will return elements that do not have the same ID.
     } else {
       updatedItems = decreaseItems.filter((item) => item.id !== minusItem.id);
     }
@@ -75,6 +78,7 @@ export default function App() {
     setCartItems(updatedItems);
   };
 
+  // Create Add button function
   const increaseQty = (addItem) => {
     const increaseItems = [...cartItems];
     const updatedItems = increaseItems.map((item) => {
@@ -102,6 +106,7 @@ export default function App() {
                 <img src={`assets/icons/${singleItem.id}.svg`} alt="beetroot" />
               </div>
               {/* 5. Add an onClick here so when the "Add to cart" button is clicked the cart items will increase in quantity. Create a function at the top, use the variable name here, assign to "onClick" */}
+              {/* Add onClick class, pass in item in the addToCartHandler */}
               <button onClick={() => addToCartHandler(singleItem)}>
                 Add to cart
               </button>
@@ -115,7 +120,7 @@ export default function App() {
           <ul className="item-list cart--item-list">
             {/* Write some code here... */}
             {/* 6. Copied the template cart-items here */}
-            {/* 7. Map through all the cart-items ??*/}
+            {/* 7. Map through all the cart-items */}
             {cartItems.map((item) => (
               <li key={item.id}>
                 <img
@@ -124,6 +129,7 @@ export default function App() {
                   alt={item.name}
                 />
                 <p>{item.name}</p>
+                {/* Add onClick class, decreaseQty function and pass through the item */}
                 <button
                   onClick={() => decreaseQty(item)}
                   className="quantity-btn remove-btn center"
@@ -131,6 +137,7 @@ export default function App() {
                   -
                 </button>
                 <span className="quantity-text center">{item.qty}</span>
+                {/* Add onClick class, increaseQty function and pass through the item */}
                 <button
                   onClick={() => increaseQty(item)}
                   className="quantity-btn add-btn center"
@@ -148,6 +155,7 @@ export default function App() {
             <h3>Total</h3>
           </div>
           <div>
+            {/* Use the cartItems state --> reduce method. Fix to 2 dec places. */}
             <span className="total-number">
               £
               {cartItems
