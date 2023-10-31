@@ -25,21 +25,66 @@ import { useState } from "react";
  What should a cart item look like? 🤔
  */
 
-console.log(initialStoreItems);
-
 export default function App() {
   // 1. Setup state here...
   const [storeItems, setStoreItems] = useState(initialStoreItems);
-  const [cartItems, setCartItems] = useState();
+  const [cartItems, setCartItems] = useState([]);
 
   // 5. Add to cart button - function
-  const addToCartButton = (itemAdded) => {
-    // Get the store items first
+  const addToCartHandler = (item) => {
+    const items = [...cartItems];
+    let exists = false;
 
-    // Add items to the store
-    storeItems.map((storeItems) => {
-      console.log(storeItems);
+    // Find an item with same id in cartItems
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].id === item.id) {
+        exists = true;
+      }
+    }
+
+    if (exists) {
+      item.qty++;
+      // if you find one, increment the qty
+    } else {
+      // else set a new qty propty to 1
+      item.qty = 1;
+      items.push(item);
+    }
+
+    setCartItems(items);
+  };
+
+  //Create a minus button event
+  const decreaseQty = (minusItem) => {
+    const decreaseItems = [...cartItems];
+    let updatedItems = [];
+
+    if (minusItem.qty > 1) {
+      updatedItems = decreaseItems.map((item) => {
+        if (minusItem.id === item.id) {
+          item.qty--;
+        }
+        // always return when using map
+        return item;
+      });
+    } else {
+      updatedItems = decreaseItems.filter((item) => item.id !== minusItem.id);
+    }
+
+    console.log(updatedItems);
+    setCartItems(updatedItems);
+  };
+
+  const increaseQty = (addItem) => {
+    const increaseItems = [...cartItems];
+    const updatedItems = increaseItems.map((item) => {
+      if (addItem.id === item.id) {
+        item.qty++;
+      }
+      return item;
     });
+
+    setCartItems(updatedItems);
   };
 
   return (
@@ -50,21 +95,18 @@ export default function App() {
           {/* Write some code here... */}
           {/* 2.  Copied the template store-item here */}
           {/* 3. Map through all the items (Render) */}
-          {storeItems.map((storeItems) => {
-            return (
-              <li key={storeItems.id}>
-                <div className="store--item-icon">
-                  {/* 4.Render the image */}
-                  <img
-                    src={`assets/icons/${storeItems.id}.svg`}
-                    alt="beetroot"
-                  />
-                </div>
-                {/* 5. Add an onClick here so when the "Add to cart" button is clicked the cart items will increase in quantity. Create a function at the top, use the variable name here, assign to "onClick" */}
-                <button onClick={addToCartButton}>Add to cart</button>
-              </li>
-            );
-          })}
+          {storeItems.map((singleItem) => (
+            <li key={singleItem.id}>
+              <div className="store--item-icon">
+                {/* 4.Render the image */}
+                <img src={`assets/icons/${singleItem.id}.svg`} alt="beetroot" />
+              </div>
+              {/* 5. Add an onClick here so when the "Add to cart" button is clicked the cart items will increase in quantity. Create a function at the top, use the variable name here, assign to "onClick" */}
+              <button onClick={() => addToCartHandler(singleItem)}>
+                Add to cart
+              </button>
+            </li>
+          ))}
         </ul>
       </header>
       <main id="cart">
@@ -74,17 +116,30 @@ export default function App() {
             {/* Write some code here... */}
             {/* 6. Copied the template cart-items here */}
             {/* 7. Map through all the cart-items ??*/}
-            <li>
-              <img
-                className="cart--item-icon"
-                src="assets/icons/001-beetroot.svg"
-                alt="beetroot"
-              />
-              <p>beetroot</p>
-              <button className="quantity-btn remove-btn center">-</button>
-              <span className="quantity-text center">1</span>
-              <button className="quantity-btn add-btn center">+</button>
-            </li>
+            {cartItems.map((item) => (
+              <li key={item.id}>
+                <img
+                  className="cart--item-icon"
+                  src={`assets/icons/${item.id}.svg`}
+                  alt={item.name}
+                />
+                <p>{item.name}</p>
+                <button
+                  onClick={() => decreaseQty(item)}
+                  className="quantity-btn remove-btn center"
+                >
+                  -
+                </button>
+                <span className="quantity-text center">{item.qty}</span>
+                <button
+                  onClick={() => increaseQty(item)}
+                  className="quantity-btn add-btn center"
+                >
+                  +
+                </button>
+              </li>
+            ))}
+
             {/* Li for cart-items end here */}
           </ul>
         </div>
@@ -93,7 +148,12 @@ export default function App() {
             <h3>Total</h3>
           </div>
           <div>
-            <span className="total-number">£0.00</span>
+            <span className="total-number">
+              £
+              {cartItems
+                .reduce((acc, item) => acc + item.price * item.qty, 0)
+                .toFixed(2)}
+            </span>
           </div>
         </div>
       </main>
